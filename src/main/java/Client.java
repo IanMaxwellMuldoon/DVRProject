@@ -11,9 +11,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import prakash.ram.model.Message;
-import prakash.ram.model.Node;
-import prakash.ram.model.DVR;
+
 
 public class Client extends Thread
 {
@@ -54,7 +52,7 @@ public class Client extends Thread
                             boolean messageReceived = false;
                             int fromID = 0;
                             try{
-                                msg = mapper.reaDVRalue(message,Message.class);
+                                msg = mapper.readValue(message,Message.class);
                                 messageReceived = true;
                                 DVR.numberOfPacketsReceived++;
                                 fromID = msg.getId();
