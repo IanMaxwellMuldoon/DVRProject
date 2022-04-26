@@ -45,6 +45,9 @@ public static Map<Node,Integer> routingTable = new HashMap<Node,Integer>();
 public static Set<Node> neighbors = new HashSet<Node>();
 public static int numberOfPacketsReceived = 0;
 public static Map<Node,Node> nextHop = new HashMap<Node,Node>();
+public int portNum;
+
+
 public static void main(String[] args) throws IOException{
 	
 	read = Selector.open();
@@ -66,7 +69,7 @@ public static void main(String[] args) throws IOException{
 		System.out.println("*********Distance Vector Routing Protocol**********");
 		System.out.println("Help Menu");
 		System.out.println("--> Commands you can use");
-		System.out.println("1. server <topology-file> -i <time-interval-in-seconds>");
+		System.out.println("1. server <topology-file> -i <time-interval-in-seconds> -port <portnumber>");
 		System.out.println("2. update <server-id1> <server-id2> <new-cost>");
 		System.out.println("3. step");
 		System.out.println("4. display");
@@ -256,7 +259,7 @@ public static void update(int serverId1, int serverId2, int cost) throws IOExcep
 			System.out.println("Update success");
 		}
 		else{
-			System.out.println("You can only update cost to your own neigbour!");
+			System.out.println("You can only update cost to your own neighbour!");
 		}
 	}
 	if(serverId2 == myID){
@@ -270,7 +273,7 @@ public static void update(int serverId1, int serverId2, int cost) throws IOExcep
 			System.out.println("Update success");
 		}
 		else{
-			System.out.println("You can only update cost to your own neigbour!");
+			System.out.println("You can only update cost to your own neighbour!");
 		}
 	}
 }
@@ -292,20 +295,20 @@ public static List<String> makeMessage(){
 public static void connect(String ip, int port, int id) {
 	System.out.println("Connecting to ip:- "+ip);
 	try {
-		if(!ip.equals(myIP)) {
+		//if(!ip.equals(myIP)) {
 
-			SocketChannel socketChannel = SocketChannel.open();
-			socketChannel.connect(new InetSocketAddress(ip,port));
-			socketChannel.configureBlocking(false);
-			socketChannel.register(read, SelectionKey.OP_READ);
-			socketChannel.register(write,SelectionKey.OP_WRITE);
-			openChannels.add(socketChannel);
-			System.out.println(".......");
-			System.out.println("Connected to "+ip);
-		}
-		else {
-			System.out.println("You cannot connect to yourself!!!");
-		}
+		SocketChannel socketChannel = SocketChannel.open();
+		socketChannel.connect(new InetSocketAddress(ip, port));
+		socketChannel.configureBlocking(false);
+		socketChannel.register(read, SelectionKey.OP_READ);
+		socketChannel.register(write, SelectionKey.OP_WRITE);
+		openChannels.add(socketChannel);
+		System.out.println(".......");
+		System.out.println("Connected to " + ip);
+
+	//	else {
+	//		System.out.println("You cannot connect to yourself");
+	//	}
 	}catch(Exception e) {
 		e.printStackTrace();
 	}
